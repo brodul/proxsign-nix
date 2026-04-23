@@ -17,14 +17,14 @@ Then install proxsign:
 
     $ nix-env -i -f https://github.com/domenkozar/proxsign-nix/tarball/master
 
-### Installing on NixOS
+### Installing on NixOS (classic)
 
 If you are using NixOS you can also add the package to your `configuration.nix`.
 
-To pin to a specific version, pick a commit from the [repository history](https://github.com/domenkozar/proxsign-nix/commits/master)
-and fetch its sha256 hash:
+To pin to a specific version, pick a commit hash from the [repository history](https://github.com/domenkozar/proxsign-nix/commits/master)
+and fetch its sha256:
 
-    $ nix-prefetch-url --unpack https://github.com/domenkozar/proxsign-nix/archive/GIT_COMMIT_HASH.tar.gz
+    $ nix-prefetch-url --unpack https://github.com/domenkozar/proxsign-nix/archive/<git-commit-hash>.tar.gz
 
 Then add it to your `configuration.nix` and rebuild:
 
@@ -32,9 +32,25 @@ Then add it to your `configuration.nix` and rebuild:
 environment.systemPackages = [
   # ProxSign
   (import (builtins.fetchTarball {
-    url = "https://github.com/domenkozar/proxsign-nix/archive/GIT_COMMIT_HASH.tar.gz";
-    sha256 = "sha256 output from nix-prefetch-url above";
+    url = "https://github.com/domenkozar/proxsign-nix/archive/<git-commit-hash>.tar.gz";
+    sha256 = "<output from nix-prefetch-url above>";
   }))
+];
+```
+
+### Installing on NixOS (flakes)
+
+Add to your `flake.nix` inputs:
+
+```nix
+inputs.proxsign.url = "github:domenkozar/proxsign-nix";
+```
+
+Then add the package to your system:
+
+```nix
+environment.systemPackages = [
+  inputs.proxsign.packages.x86_64-linux.proxsign
 ];
 ```
 
