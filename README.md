@@ -17,6 +17,10 @@ Then install proxsign:
 
     $ nix-env -i -f https://github.com/domenkozar/proxsign-nix/tarball/master
 
+Or run it directly without installing (requires flakes):
+
+    $ nix run github:domenkozar/proxsign-nix
+
 ### Installing on NixOS (classic)
 
 If you are using NixOS you can also add the package to your `configuration.nix`.
